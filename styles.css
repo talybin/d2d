@@ -1,0 +1,17 @@
+body {
+    padding: 10px;
+    background-color: #f5f6ff;
+}
+table.table {
+    margin: 0px;
+}
+table.table>thead>tr>th {
+    font-size: 14px;
+}
+table.table>tbody>tr>td {
+    font-size: 13px;
+}
+span.label {
+    padding: 8px;
+    font-size: 12px;
+}
