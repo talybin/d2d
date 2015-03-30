@@ -10,7 +10,7 @@ echo 'working with contract ' . $_GET['id'] . '!';
 
 ?>
 
-<form action="insertPackageDetails.php" method="post">
+<form action="insertPackageDetails.php?=" <?php echo $_GET['id']; ?>   method="post">
 <input type = "hidden" name ="contractID" value="<?php echo $_GET['id']; ?>"> 
 <input type="text" name="price" placeholder = "price in SEK">
 <input type="text" name="description" placeholder = "description of contents">
