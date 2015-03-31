@@ -1,6 +1,18 @@
+<?php
+session_start();
+// Check, if username session is NOT set then this page will jump to login page
+if (!isset($_SESSION['uid'])) {
+    header('Location: index.html');
+}
+$email = $_SESSION['uid'];
+?>
+
 <html>
 <head>
     <link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css">
+<!--
+    <script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/js/bootstrap.min.js"></script>
+-->
     <link rel="stylesheet" type="text/css" href="styles.css">
 </head>
 <body>
@@ -8,12 +20,6 @@
 <?php
 include 'db/settings.php';
 
-$email = "buyer@d2d.se";
-
-$conn = new mysqli($servername, $username, $password, $dbname);
-if ($conn->connect_error) {
-    die("Connection failed: " . $conn->connect_error);
-}
 $sql = "SELECT c.contractId, seller, pickUpAddress, deliveryAddress, " .
        "opens, signs, pays, confirms, takes, picksUp, dropsOff, d.price delPrice, " .
        "SUM(weight) totWeight, SUM(p.price) totPrice, COUNT(packageId) numItems " .
@@ -23,13 +29,23 @@ $sql = "SELECT c.contractId, seller, pickUpAddress, deliveryAddress, " .
 $result = $conn->query($sql);
 ?>
 
-<ul class="nav nav-pills">
-  <li role="presentation"><a href="selling.php">Selling</a></li>
-  <li role="presentation" class="active">
-    <a href="#">Buying <span class="badge"><?php echo $result->num_rows; ?></span></a>
-  </li>
-  <li role="presentation"><a href="history.php">History</a></li>
-</ul>
+<nav class="navbar navbar-default">
+  <div class="container-fluid">
+    <div class="navbar-header">
+        <a class="navbar-brand" href="index.html">D2D</a>
+    </div>
+
+    <ul class="nav navbar-nav">
+        <li role="presentation"><a href="selling.php">Selling</a></li>
+        <li role="presentation" class="active">
+            <a href="#">Buying <span class="badge"><?php echo $result->num_rows; ?></span></a>
+        </li>
+        <li role="presentation"><a href="history.php">History</a></li>
+    </ul>
+    <p class="navbar-text navbar-right">Signed in as <?php echo $email; ?></p>
+
+</div>
+</nav>
 
 <?php
 while ($contractRow = $result->fetch_assoc()) {
@@ -49,7 +65,8 @@ while ($contractRow = $result->fetch_assoc()) {
         if (!is_null($contractRow['signs']) && is_null($contractRow['pays'])) {
     ?>
     <div class="alert alert-success" role="alert">
-        Seller has signed this contract. Please <a href="#" class="alert-link">pay</a>.
+        Seller has signed this contract. Please <a
+        href="buyer_pay.php?contractid=<?php echo $contractRow['contractId']; ?>" class="alert-link">pay</a>.
     </div>
     <?php
         }
