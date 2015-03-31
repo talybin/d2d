@@ -1,3 +1,12 @@
+<?php
+session_start();
+// Check, if username session is NOT set then this page will jump to login page
+if (!isset($_SESSION['uid'])) {
+    header('Location: index.html');
+}
+$email = $_SESSION['uid'];
+?>
+
 <html>
 <head>
     <link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css">
@@ -8,12 +17,6 @@
 <?php
 include 'db/settings.php';
 
-$email = "buyer@d2d.se";
-
-$conn = new mysqli($servername, $username, $password, $dbname);
-if ($conn->connect_error) {
-    die("Connection failed: " . $conn->connect_error);
-}
 $sql = "SELECT c.contractId, seller, buyer, pickUpAddress, deliveryAddress, " .
        "opens, signs, pays, confirms, takes, picksUp, dropsOff, d.price delPrice, " .
        "SUM(weight) totWeight, SUM(p.price) totPrice, COUNT(packageId) numItems " .
@@ -24,13 +27,24 @@ $sql = "SELECT c.contractId, seller, buyer, pickUpAddress, deliveryAddress, " .
 $result = $conn->query($sql);
 ?>
 
-<ul class="nav nav-pills">
-  <li role="presentation"><a href="selling.php">Selling</a></li>
-  <li role="presentation"><a href="buying.php">Buying</a></li>
-  <li role="presentation" class="active">
-    <a href="#">History <span class="badge"><?php echo $result->num_rows; ?></a>
-  </li>
-</ul>
+<nav class="navbar navbar-default">
+  <div class="container-fluid">
+    <div class="navbar-header">
+        <a class="navbar-brand" href="index.html">D2D</a>
+    </div>
+
+    <ul class="nav navbar-nav">
+        <li role="presentation"><a href="selling.php">Selling</a></li>
+        <li role="presentation"><a href="buying.php">Buying</a></li>
+        <li role="presentation" class="active">
+            <a href="#">History <span class="badge"><?php echo $result->num_rows; ?></a>
+        </li>
+    </ul>
+    <p class="navbar-text navbar-right">Signed in as <?php echo $email; ?></p>
+
+</div>
+</nav>
+
 
 <?php
 while ($contractRow = $result->fetch_assoc()) {

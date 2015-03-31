@@ -1,15 +1,39 @@
 <html>
 <head>
-<title>Welcome to D2D</title>
+    <title>Welcome to D2D</title>
+    <link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css">
+    <link rel="stylesheet" type="text/css" href="styles.css">
 </head>
 <body>
-    WELCOME TO D2D<br><br>
-    Please login<br><br>
-    <form action="startpage.php" method="post">
-        <input type="text" name="email" placeholder="Email" /><br><br>
-        <input type="text" name="passwd" placeholder="Password" /><br><br>
-        <input type="submit" value="Login" /></br><br>
-    </form>
-    or <a href="register.html">register</a>
+
+<form action="login.php" method="post">
+
+<div class="jumbotron">
+  <h1>WELCOME TO D2D!</h1>
+  <p>PLEASE LOGIN</p>
+
+<div style="width:300px">
+<p>
+<div class="input-group">
+  <input type="text" class="form-control" name="uid"
+    aria-describedby="sizing-addon1" />
+  <span class="input-group-addon" id="sizing-addon1">Email</span>
+</div>
+</p>
+<p>
+<div class="input-group">
+  <input type="password" class="form-control" name="pwd"
+    aria-describedby="sizing-addon2" />
+  <span class="input-group-addon" id="sizing-addon2">Password</span>
+</div>
+</p>
+<p>
+    <button type="submit" class="btn btn-primary btn-lg">Login</button>
+</p>
+</div>
+</div>
+
+</form>
+
 </body>
 
