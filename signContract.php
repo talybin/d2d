@@ -16,18 +16,16 @@ include 'db/settings.php';
 
 <?php 
 
-$sql = "insert into Delivery (contractID,driverID,price) select contractID,1,sum(height*width*length)/1000 from Package";
+$sql = "insert into Delivery (contractID,driverID,price) select contractID,1,sum(height*width*length)/1000 from Package where contractID=". $_GET['id'];
 $conn->query($sql);
 
 $sql = "UPDATE Contract SET signs = now() WHERE contractID=" . $_GET['id'];
 
 if ($conn->query($sql) === TRUE) {
-    	$contractID = $conn->insert_id;
-	echo "New contract " . $_GET['id'] ." signed successfully !";
-
-	echo "<br><br><a href = selling.php>Back to first page</a>";
+    header('Location: selling.php');
 } else {
     echo "Error: " . $sql . "<br>" . $conn->error;
+	echo "<br><br><a href = selling.php>Back to first page</a>";
 }
 
 $conn->close();
