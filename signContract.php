@@ -16,6 +16,9 @@ include 'db/settings.php';
 
 <?php 
 
+$sql = "insert into Delivery (contractID,driverID,price) select contractID,1,sum(height*width*length)/1000 from Package";
+$conn->query($sql);
+
 $sql = "UPDATE Contract SET signs = now() WHERE contractID=" . $_GET['id'];
 
 if ($conn->query($sql) === TRUE) {
