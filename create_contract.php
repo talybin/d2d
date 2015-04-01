@@ -13,6 +13,7 @@ $result = $conn->query($sql);
 if ($row = $result->fetch_assoc()) {
     $address = $row["address"];
 }
+$result = $conn->query("SELECT email FROM Buyer");
 ?>
 
 <!DOCTYPE html>
@@ -24,11 +25,19 @@ if ($row = $result->fetch_assoc()) {
    Register new contract below <br><br> 
 <form action="registerContract.php" method="post">
 Buyer:<br>
-<input type="text" name="buyer" placeholder = "buyer email">
-<br>
+<select name="buyer">
+<?php
+    while ($row = $result->fetch_assoc()) {
+        $m = $row["email"];
+        echo "<option value=\"$m\">$m</option>\n";
+    }
+?>
+</select>
+<!--<input type="text" name="buyer" placeholder = "buyer email">-->
+<br><br>
 PickUP Address:<br>
 <input type="text" name="pickUpAddress" value="<?php echo $address; ?>">
-<br> 
+<br><br>
 Delivery Address:<br>
 <input type="text" name="deliveryAddress">
 <br><br>
