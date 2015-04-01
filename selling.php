@@ -73,7 +73,7 @@ while ($contractRow = $result->fetch_assoc()) {
         else if (!is_null($contractRow['confirms'])) {
     ?>
     <div class="alert alert-success" role="alert">
-        Buyer has confirmed the delivery. Please <a href="#" class="alert-link">setle</a> this contract.
+        Buyer has confirmed the delivery. Please <a href="settle.php?cid=<?php echo $contractRow['contractId']; ?>" class="alert-link">settle</a> this contract.
     </div>
     <?php
         }

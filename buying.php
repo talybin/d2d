@@ -73,7 +73,7 @@ while ($contractRow = $result->fetch_assoc()) {
         else if (!is_null($contractRow['dropsOff']) && is_null($contractRow['confirms'])) {
     ?>
     <div class="alert alert-success" role="alert">
-        Packages are delivered. Please <a href="#" class="alert-link">confirm</a>.
+        Packages are delivered. Please <a href="confirm.php?cid=<?php echo $contractRow['contractId'];?>" class="alert-link">confirm</a>.
     </div>
     <?php
         }
